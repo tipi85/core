@@ -7,7 +7,6 @@ at https://home-assistant.io/components/zha.climate/
 from datetime import datetime, timedelta
 import enum
 import functools
-import logging
 from random import randint
 from typing import List, Optional, Tuple
 
@@ -145,8 +144,6 @@ SYSTEM_MODE_2_HVAC = {
 
 ZCL_TEMP = 100
 
-_LOGGER = logging.getLogger(__name__)
-
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation sensor from config entry."""
@@ -200,6 +197,10 @@ class Thermostat(ZhaEntity, ClimateEntity):
             data[ATTR_OCCP_COOL_SETPT] = self._thrm.occupied_cooling_setpoint
         if self._thrm.occupied_heating_setpoint is not None:
             data[ATTR_OCCP_HEAT_SETPT] = self._thrm.occupied_heating_setpoint
+        if self._thrm.pi_heating_demand is not None:
+            data[ATTR_PI_HEATING_DEMAND] = self._thrm.pi_heating_demand
+        if self._thrm.pi_cooling_demand is not None:
+            data[ATTR_PI_COOLING_DEMAND] = self._thrm.pi_cooling_demand
 
         unoccupied_cooling_setpoint = self._thrm.unoccupied_cooling_setpoint
         if unoccupied_cooling_setpoint is not None:
@@ -389,7 +390,7 @@ class Thermostat(ZhaEntity, ClimateEntity):
     async def async_added_to_hass(self):
         """Run when about to be added to hass."""
         await super().async_added_to_hass()
-        await self.async_accept_signal(
+        self.async_accept_signal(
             self._thrm, SIGNAL_ATTR_UPDATED, self.async_attribute_updated
         )
 
@@ -583,3 +584,13 @@ class ZenWithinThermostat(Thermostat):
         if self.hvac_mode != HVAC_MODE_OFF:
             return CURRENT_HVAC_IDLE
         return CURRENT_HVAC_OFF
+
+
+@STRICT_MATCH(
+    channel_names=CHANNEL_THERMOSTAT,
+    aux_channels=CHANNEL_FAN,
+    manufacturers="Centralite",
+    models="3157100",
+)
+class CentralitePearl(ZenWithinThermostat):
+    """Centralite Pearl Thermostat implementation."""

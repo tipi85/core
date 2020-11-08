@@ -10,13 +10,14 @@
             "one": "Een",
             "other": "Ander"
         },
-        "flow_title": "[%%]: {naam}",
+        "flow_title": "UPnP/IGD: {name}",
         "step": {
             "ssdp_confirm": {
                 "description": "Wilt u [%%] instellen?"
             },
             "user": {
                 "data": {
+                    "scan_interval": "Update-interval (seconden, minimaal 30)",
                     "usn": "Apparaat"
                 }
             }

@@ -23,11 +23,16 @@
             "advanced": {
                 "data": {
                     "auto_start": "Samodejni zagon (onemogo\u010dite, \u010de uporabljate Z-wave ali kakteri drug sistem z zakasnjenim zagonom)",
-                    "safe_mode": "Varni na\u010din (omogo\u010dite samo, \u010de seznanjanje ne uspe)",
-                    "zeroconf_default_interface": "Uporabite privzeti zeroconf vmesnik (omogo\u010dite, \u010de mostu ni mogo\u010de najti v Home Assistant-u)"
+                    "safe_mode": "Varni na\u010din (omogo\u010dite samo, \u010de seznanjanje ne uspe)"
                 },
                 "description": "Te nastavitve je treba prilagoditi le, \u010de most HomeKit ni funkcionalen.",
                 "title": "Napredna konfiguracija"
+            },
+            "cameras": {
+                "data": {
+                    "camera_copy": "Kamere, ki podpirajo izvorne tokove H.264"
+                },
+                "title": "Izberite video kodek kamere."
             },
             "exclude": {
                 "data": {
@@ -35,6 +40,12 @@
                 },
                 "description": "Izberite entitete, ki jih NE \u017eelite premostiti.",
                 "title": "Iz mostu izklju\u010dite subjekte izbranih domen"
+            },
+            "include_exclude": {
+                "data": {
+                    "entities": "Entitete"
+                },
+                "title": "Izberite entitete, ki jih \u017eelite izpostaviti"
             },
             "init": {
                 "data": {
@@ -49,5 +60,5 @@
             }
         }
     },
-    "title": "HomeKit Most"
+    "title": "Most za HomeKit"
 }
